@@ -8,6 +8,7 @@ class SetSecret(deploy_job.DeployJob):
 
     def run(self):
         # copy secret config file
+        # this file contains sensitive setting values, keeping out from git repo
         shutil.copy(self.app_config["secret_src"], self.app_config["secret_dest"])
         print("Copying file: %s" % self.app_config["secret_dest"])
 
