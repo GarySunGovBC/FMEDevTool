@@ -11,6 +11,7 @@ app_config = {}
 # read app settings
 with open(CONFIG) as app_config_json:
     app_config = json.load(app_config_json)
+# read settings from env json file, default to "..\Env\deploy.json", for local path and env vars
 with open(os.path.join(app_config["env_dir"], app_config["app_env"])) as env_config_json:
     env_config = json.load(env_config_json)
 app_config["app_name"] = env_config["app_name"]
@@ -19,7 +20,7 @@ app_config["git_path"] = env_config["git_path"]
 app_config["code_path"] = env_config["code_path"]
 
 
-def class_fctory(key):
+def class_factory(key):
     """Class factory."""
     # deploy files
     if key == 'checkout_fme':
@@ -36,13 +37,12 @@ def class_fctory(key):
 
 
 # create jobs in the list
-# use command line to choose jobs to run
+# use command line args to choose jobs to run
 for cls in sys.argv:
-    job = class_fctory(cls)
+    job = class_factory(cls)
     if job:
         job.run()
-print "Done. Hit ENTER to close..."
 try:
-    input()
+    raw_input("Done. Hit ENTER to close...")
 except:
     pass
