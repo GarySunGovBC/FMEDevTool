@@ -18,6 +18,8 @@ app_config["app_name"] = env_config["app_name"]
 app_config["python_path"] = env_config["python_path"]
 app_config["git_path"] = env_config["git_path"]
 app_config["code_path"] = env_config["code_path"]
+app_config["work_branch"] = env_config["work_branch"]
+app_config["lib_path"] = env_config["lib_path"]
 
 
 def class_factory(key):

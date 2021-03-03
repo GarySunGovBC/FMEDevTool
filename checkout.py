@@ -25,6 +25,7 @@ class Checkout(deploy_job.DeployJob):
             if cmd_line.startswith('rmdir'):
                 if not self.rm_dir_exist(cmd_line):
                     continue
+            cmd_line = cmd_line.replace("\\\\", "\\")
             ret = os.system(cmd_line)
             if ret != 0:
                 raise Exception("Failed at: %s" % cmd_line)
