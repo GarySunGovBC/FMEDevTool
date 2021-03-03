@@ -1,22 +1,23 @@
 {
   "lib_name": "lib64",
-  "work_branch": "fme2018",
   "secrets_dir_name": "secrets",
   "env_dir": "..\\Env",
   "app_env": "deploy.json",
   "token_name": "token.txt",
   "secret_name": "templateDefaults.config",
+  "script_specific": "scriptSpecific",
   "cmd_bat_fme": [
     "rmdir code_path\\app_name/s/q",
     "git_path clone -b work_branch https://idir-gsun:token_value@gogs.data.gov.bc.ca/daops/FMETemplate2.git code_path\\app_name"
   ],
-   "cmd_bat_lib": [
+  "cmd_bat_lib": [
     "rmdir code_path\\app_name\\lib_name/s/q",
-    "python_path -m pip install -r code_path\\app_name\\lib\\requirements.txt -t code_path\\app_name\\lib_name"
+    "python_path -m pip install -r code_path\\app_name\\lib_path\\lib\\requirements.txt -t code_path\\app_name\\lib_path\\lib_name"
   ],
- "cmd_param": [
+  "cmd_param": [
     "code_path",
     "app_name",
+    "lib_path",
     "lib_name",
     "git_path",
     "python_path",
@@ -52,8 +53,8 @@
     "PMP",
     "PMP-0.3-py2.7.egg-info",
     "PMP-0.3.dist-info",
-	"KirkUtil",
-	"KirkUtil-0.4.dist-info",
+    "KirkUtil",
+    "KirkUtil-0.4.dist-info",
     "psutil",
     "psutil-5.2.2.dist-info",
     "python_dateutil-2.6.1.dist-info",
