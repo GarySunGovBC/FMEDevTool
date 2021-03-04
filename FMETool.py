@@ -4,6 +4,7 @@ import json
 import checkout
 import clean_lib
 import set_secret
+import set_user
 
 CONFIG = "app.json"
 
@@ -19,8 +20,7 @@ app_config["python_path"] = env_config["python_path"]
 app_config["git_path"] = env_config["git_path"]
 app_config["code_path"] = env_config["code_path"]
 app_config["work_branch"] = env_config["work_branch"]
-app_config["lib_path"] = env_config["lib_path"]
-
+app_config["customize_users"] = env_config["customize_users"]
 
 def class_factory(key):
     """Class factory."""
@@ -35,6 +35,8 @@ def class_factory(key):
     # copy secret file
     if key == 'secret':
         return set_secret.SetSecret(app_config)
+    if key == 'user':
+        return set_user.SetUser(app_config)
     return None;
 
 
@@ -43,7 +45,7 @@ def class_factory(key):
 for cls in sys.argv:
     job = class_factory(cls)
     if job:
-        job.run()
+        job.execute()
 try:
     raw_input("Done. Hit ENTER to close...")
 except:
