@@ -13,10 +13,11 @@ class SetUser(deploy_job.DeployJob):
             text += "\"%s\"," % s
         if text:
             text = text[:-1]
-        text = "\"customize_users\":[%s]" % text
+        text = "{\n\t\"customize_users\":[%s]\n}" % text
         f = open(self.app_config["user_env_dest"], "w")
         f.write(text)
         f.close()
+        print("Creating file: %s" % self.app_config["user_env_dest"])
 
     def __init__(self, app_config):
         super(SetUser, self).__init__(app_config)

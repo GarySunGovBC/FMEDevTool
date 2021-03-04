@@ -8,8 +8,20 @@ class Checkout(deploy_job.DeployJob):
 
     @staticmethod
     def rm_dir_exist(fullname):
-        fullname = fullname.replace("rmdir", "").replace("/s", "").replace("/q", "").strip()
+        fullname = fullname.replace("rmdir ", "").replace("/s", "").replace("/q", "").strip()
         return os.path.exists(fullname)
+
+    @staticmethod
+    def run_succ(cmd_line):
+        if cmd_line.startswith('rmdir '):
+            return not Checkout.rm_dir_exist(cmd_line)
+        return True
+
+    @staticmethod
+    def will_run(cmd_line):
+        if cmd_line.startswith('rmdir '):
+            return Checkout.rm_dir_exist(cmd_line)
+        return True
 
     def __init__(self, app_config):
         super(Checkout, self).__init__(app_config)
@@ -21,17 +33,16 @@ class Checkout(deploy_job.DeployJob):
             raise ValueError("Checkout key not defined.")
         # run defined commands, pull FMETemplate2 and lib64
         for cmd in self.app_config[self.key]:
-            cmd_line = cmd
+            cmd_line = cmd.strip()
             for param in self.app_config["cmd_param"]:
                 cmd_line = cmd_line.replace(param, self.app_config[param])
             if "token_value" in cmd_line and self.token:
                 cmd_line = cmd_line.replace("token_value", self.token)
-            if cmd_line.startswith('rmdir'):
-                if not self.rm_dir_exist(cmd_line):
-                    continue
+            if not self.will_run(cmd_line):
+                continue
             cmd_line = cmd_line.replace("\\\\", "\\")
             ret = os.system(cmd_line)
-            if ret != 0:
+            if (ret != 0) or (not self.run_succ(cmd_line)):
                 raise Exception("Failed at: %s" % cmd_line)
 
 

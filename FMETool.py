@@ -22,6 +22,7 @@ app_config["code_path"] = env_config["code_path"]
 app_config["work_branch"] = env_config["work_branch"]
 app_config["customize_users"] = env_config["customize_users"]
 
+
 def class_factory(key):
     """Class factory."""
     # deploy files
