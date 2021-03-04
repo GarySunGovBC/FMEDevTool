@@ -7,6 +7,8 @@ class CleanLib(deploy_job.DeployJob):
     """ Delete the extra files from the specific directory """
 
     def run(self):
+        if not os.path.exists(self.app_config["lib64_path"]):
+            raise Exception("Directory not existing: %s" % self.app_config["lib64_path"])
         # list all files and dirs for lib dir
         files = os.listdir(self.app_config["lib64_path"])
         for fn in files:
@@ -23,4 +25,4 @@ class CleanLib(deploy_job.DeployJob):
     def __init__(self, app_config):
         super(CleanLib, self).__init__(app_config)
         self.app_config["lib64_path"] = os.path.join(self.app_config["code_path"], self.app_config["app_name"],
-                                                     self.app_config["lib_path"], self.app_config["lib_name"])
+                                                     self.app_config["default_lib_path"], self.app_config["lib_name"])

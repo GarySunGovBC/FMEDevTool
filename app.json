@@ -3,21 +3,25 @@
   "secrets_dir_name": "secrets",
   "env_dir": "..\\Env",
   "app_env": "deploy.json",
+  "app_config_dir": "config",
   "token_name": "token.txt",
+  "default_lib_path": "DefaultLib",
   "secret_name": "templateDefaults.config",
   "script_specific": "scriptSpecific",
+  "user_env": "users.json",
+  "log_dir": "outputs\\log",
   "cmd_bat_fme": [
     "rmdir code_path\\app_name/s/q",
     "git_path clone -b work_branch https://idir-gsun:token_value@gogs.data.gov.bc.ca/daops/FMETemplate2.git code_path\\app_name"
   ],
   "cmd_bat_lib": [
     "rmdir code_path\\app_name\\lib_name/s/q",
-    "python_path -m pip install -r code_path\\app_name\\lib_path\\lib\\requirements.txt -t code_path\\app_name\\lib_path\\lib_name"
+    "python_path -m pip install -r code_path\\app_name\\default_lib_path\\lib\\requirements.txt -t code_path\\app_name\\default_lib_path\\lib_name"
   ],
   "cmd_param": [
     "code_path",
     "app_name",
-    "lib_path",
+    "default_lib_path",
     "lib_name",
     "git_path",
     "python_path",

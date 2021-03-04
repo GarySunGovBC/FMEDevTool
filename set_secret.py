@@ -48,7 +48,10 @@ class SetSecret(deploy_job.DeployJob):
 
     def copy_secret(self):
         # copy secret config file
-        # this file contains sensitive setting values, keeping out from git repo
+        # this file contains env variables may not be overwritten
+        dest_dir = os.path.dirname(self.app_config["secret_dest"])
+        if not os.path.exists(dest_dir):
+            os.makedirs(dest_dir)
         shutil.copy(self.app_config["secret_src"], self.app_config["secret_dest"])
         print("Copying file: %s" % self.app_config["secret_dest"])
 
@@ -56,6 +59,6 @@ class SetSecret(deploy_job.DeployJob):
         super(SetSecret, self).__init__(app_config)
         self.app_config["secret_src"] = os.path.join(self.app_config["env_dir"], self.app_config["secret_name"])
         self.app_config["secret_dest"] = os.path.join(self.app_config["code_path"], self.app_config["app_name"],
-                                                      self.app_config["lib_path"],
+                                                      self.app_config["default_lib_path"],
                                                       self.app_config["secrets_dir_name"],
                                                       self.app_config["secret_name"])
